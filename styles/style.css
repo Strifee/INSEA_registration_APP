@@ -1,0 +1,50 @@
+body{
+    font-family:monospace;
+    margin: 0;
+    padding: 0;
+}
+
+#carouselExemple{
+    width: 100%;
+    margin: 0 auto;
+}
+
+.carousel-inner .img{
+    
+    width:100%;
+    height: auto;
+    background-size: cover;
+    opacity: 0.5;
+    
+}
+
+.carousel-caption{
+    padding-bottom: 88px;
+}
+
+.carousel-caption h5{
+    font-size: 75px;
+}
+
+.carousel-control-prev{
+    background-image: none;
+}
+
+.carousel-control-next{
+    background-image: none;
+}
+
+.btn{
+    background: #262626;
+    padding: 15px 25px;
+    text-decoration: none ;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+@media (max-width: 500px){
+    .carousel-inner > .carousel-item > img {
+        height: 100vh;
+    }
+
+}
