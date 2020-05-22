@@ -34,16 +34,18 @@ require_once('config.php');
         $stmtinsert = $db->prepare($sql);
         $result = $stmtinsert->execute([$matricule,$firstname,$lastname,$cycle,$filiere,$niveau,$date1,$date2,$image,$cin,$bac,$reussite]);
         if($result){
-        echo "success !";
+               echo "<script type=\"text/javascript\">".
+                    "alert('success');".
+                    "</script>";
         }else{
-            echo "Error while saving !" ; 
+            echo "Error!". mysql_error();
         }
     }
 	?>	
 </div>
 <section class="container-fluid">
     <div class="form-groupe" >
-        <div class="card-body col-xs-1" >
+        <div class="card-body col-lg-6" style="margin: auto;" >
             <form class="form-container text-center p-5" style="color: #fff;" action="registration.php" method="post">
                             <h5 class="card-header text-center py-4" >
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/INSEA_logo.png" style=" width:100px; height=100px;">
@@ -54,27 +56,27 @@ require_once('config.php');
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Matricule</strong></b>
                                 </label>
-                                <input class="form-control" id="matricule"  type="text" name="matricule" required>
+                                <input class="form-control" id="matricule"  type="text" name="matricule" style="text-align:center;" required>
                             </div>
 
                             <br>
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Nom</strong></b></label>
-                                <input class="form-control" id="firstname" type="text" name="firstname" required>
+                                <input class="form-control" id="firstname" type="text" name="firstname" style="text-align:center;" required>
                             </div>
 
                             <br>
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Prenom</strong></b></label>
-                                <input class="form-control" id="lastname"  type="text" name="lastname" required>
+                                <input class="form-control" id="lastname"  type="text" name="lastname" style="text-align:center;" required>
                             </div>
 
                             <br>
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Cycle</strong></b></label>
-                                <select  class="form-control" id="cycle" name="cycle">
+                                <select  class="form-control" id="cycle" name="cycle" >
                                     <option value="ingenieur">ingénieurs-d’Etat</option>
                                     <option value="Master">Master</option>
                                     <option value="Doctorat">Doctorat</option>
@@ -85,6 +87,7 @@ require_once('config.php');
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Filière</strong></b></label>
+                                
                                 <select  class="form-control" id="filiere" name="filiere">
                                     <option value="AF">Actuariat-Finance</option>
                                     <option value="DSE">Ingénierie des Données et des Logiciels</option>
@@ -92,6 +95,7 @@ require_once('config.php');
                                     <option value="DS">Science des Données</option>
                                     <option value="Stat-Demo">Statistique-Démographie</option>
                                     <option value="Stat-Eco">Statistique-Economie Appliquée</option>
+                                    <option value="LSI2M">SI2M</option>
                                 </select>
                             </div>
                             
@@ -155,26 +159,6 @@ require_once('config.php');
             </form>
         </div>
     </div>
-</section> 
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript">
-    $(function(){
-        $('#register').click(function()){
-            swal({
-            title: "félicitation ",
-            text: "Inscription Validée !",
-            icon: "success",
-            
-        });
-        });
-        
-    });
-
-
-</script>
+</section>
 </body>
 </html>
-
