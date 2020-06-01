@@ -1,6 +1,4 @@
-<?php
-require_once('config.php');
- ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,39 +12,11 @@ require_once('config.php');
 <body>
     
 
-<div>
-	<?php
-	if(isset($_POST['create'])){
-        $matricule = $_POST['matricule'];
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
-        $cycle = $_POST['cycle'];
-        $filiere = $_POST['filiere'];
-        $niveau = $_POST['niveau'];
-        $date1 = $_POST['date1'];
-        $date2 = $_POST['date2'];
-        $image = $_POST['image'];
-        $cin = $_POST['cin'];
-        $bac = $_POST['bac'];
-        $reussite = $_POST['reussite'];
-        
-        $sql = " INSERT INTO users ( matricule , firstname , lastname , cycle , filiere , niveau , date1 , date2 , image ,  cin , bac , reussite )    VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ";
-        $stmtinsert = $db->prepare($sql);
-        $result = $stmtinsert->execute([$matricule,$firstname,$lastname,$cycle,$filiere,$niveau,$date1,$date2,$image,$cin,$bac,$reussite]);
-        if($result){
-               echo "<script type=\"text/javascript\">".
-                    "alert('success');".
-                    "</script>";
-        }else{
-            echo "Error!". mysql_error();
-        }
-    }
-	?>	
-</div>
+
 <section class="container-fluid">
     <div class="form-groupe" >
         <div class="card-body col-lg-6" style="margin: auto;" >
-            <form class="form-container text-center p-5" style="color: #fff;" action="registration.php" method="post">
+            <form class="form-container text-center p-5" style="color: #fff;" action="includes/signup.inc.php" method="post">
                             <h5 class="card-header text-center py-4" >
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/INSEA_logo.png" style=" width:100px; height=100px;">
                                 <strong style="font-size:50px;">Inscription</strong>
@@ -56,20 +26,38 @@ require_once('config.php');
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Matricule</strong></b>
                                 </label>
-                                <input class="form-control" id="matricule"  type="text" name="matricule" style="text-align:center;" required>
+                                <input class="form-control" id="matricule"  type="text" name="matricule" style="text-align:center;" >
                             </div>
+
+                            <br>
+                            <div class="form-group">
+                                <label for="inputdefault"><b><strong style="font-size:20px;">Email</strong></b></label>
+                                <input class="form-control" id="Email" type="Email" name="Email" style="text-align:center;" >
+                            </div>
+
+                            <br>
+                            <div class="form-group">
+                                <label for="inputdefault"><b><strong style="font-size:20px;">Mot de passe</strong></b></label>
+                                <input class="form-control" id="Password" type="Password" name="Password" style="text-align:center;" >
+                            </div>
+
+                            <br>
+                            <div class="form-group">
+                                <label for="inputdefault"><b><strong style="font-size:20px;">Confirmez votre mot de passe</strong></b></label>
+                                <input class="form-control" id="PasswordR" type="PasswordR" name="Password-R" style="text-align:center;" >
+                            </div>
+
 
                             <br>
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Nom</strong></b></label>
-                                <input class="form-control" id="firstname" type="text" name="firstname" style="text-align:center;" required>
+                                <input class="form-control" id="firstname" type="text" name="firstname" style="text-align:center;" >
                             </div>
 
                             <br>
-
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Prenom</strong></b></label>
-                                <input class="form-control" id="lastname"  type="text" name="lastname" style="text-align:center;" required>
+                                <input class="form-control" id="lastname"  type="text" name="lastname" style="text-align:center;" >
                             </div>
 
                             <br>
@@ -114,42 +102,42 @@ require_once('config.php');
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Date De Naissance</strong></b></label>
-                                <input class="form-control" id="date1"  type="date" name="date1" required>
+                                <input class="form-control" id="date1"  type="date" name="date1" >
                             </div>
 
                             <br>
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Date D'inscription</strong></b></label>
-                                <input class="form-control" id="date2"  type="date" name="date2" required>
+                                <input class="form-control" id="date2"  type="date" name="date2" >
                             </div>
                             
                             <br>
 
                             <div class="form-group">
-                                <label for="inputdefault"><b><strong style="font-size:20px;">Photo</strong></b></label>
-                                <input class="form-control" id="image"  type="file" name="image" required>
+                                <label for="inputdefault"><b><strong style="font-size:20px;">Photo ( Type : JPG , JPEG , PNG )</strong></b></label>
+                                <input class="form-control" id="image"  type="file" name="image" >
                             </div>
 
                             <br>
 
                             <div class="form-group">
-                                <label for="inputdefault"><b><strong style="font-size:20px;">Copie de la CIN</strong></b></label>
-                                <input class="form-control" id="cin"  type="file" name="cin" required>
+                                <label for="inputdefault"><b><strong style="font-size:20px;">Copie de la CIN ( Type : JPG , JPEG , PNG )</strong></b></label>
+                                <input class="form-control" id="cin"  type="file" name="cin" >
                             </div>
 
                             <br>
 
                             <div class="form-group">
-                                <label for="inputdefault"><b><strong style="font-size:20px;">Copie du Baccalauréat</strong></b></label>
-                                <input class="form-control" id="bac"  type="file" name="bac" required>
+                                <label for="inputdefault"><b><strong style="font-size:20px;">Copie du Baccalauréat ( Type : JPG , JPEG , PNG )</strong></b></label>
+                                <input class="form-control" id="bac"  type="file" name="bac" >
                             </div>
 
                             <br>
 
                             <div class="form-group">
-                                <label for="inputdefault"><b><strong style="font-size:20px;">Attestation de réussite (CNC,DEUGS ou Licence)</strong></b></label>
-                                <input class="form-control" id="reussite"  type="file" name="reussite" required>
+                                <label for="inputdefault"><b><strong style="font-size:20px;">Attestation de réussite (CNC,DEUGS ou Licence) ( Type : JPG , JPEG , PNG )</strong></b></label>
+                                <input class="form-control" id="reussite"  type="file" name="reussite" >
                             </div>
 
                             <div class="form-group">
