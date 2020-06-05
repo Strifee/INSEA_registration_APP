@@ -18,7 +18,7 @@ body{
 .container img{
 	width: 150px;
 	height: 150px;
-	margin-top: -60px;
+	margin-top: 10px;
 }
 
 input[type="text"],input[type="password"]{
@@ -31,19 +31,8 @@ input[type="text"],input[type="password"]{
 	padding-left: 40px;
 }
 
-.form-input::before{
-	content: "\f007";
-	font-family: "FontAwesome";
-	padding-left: 07px;
-	padding-top: 40px;
-	position: absolute;
-	font-size: 35px;
-	color: #2980b9; 
-}
 
-.form-input:nth-child(2)::before{
-	content: "\f023";
-}
+
 
 .btn-login{
 	padding: 15px 25px;

@@ -1,4 +1,3 @@
-
 <?php
 	if(isset($_POST['create'])){
 
@@ -6,8 +5,8 @@
 
         $matricule = $_POST['matricule'];
         $Email = $_POST['Email'];
-        $Password = $_POST['Password'];
-        $PasswordR = $_POST['PasswordR'];
+        $pwd = $_POST['Password'];
+        $pwdR = $_POST['PasswordR'];
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $cycle = $_POST['cycle'];
@@ -21,79 +20,75 @@
         $reussite = $_POST['reussite'];
         
 
-        if (empty($matricule) || empty($Email) || empty($Password) || empty($PasswordR) || empty($firstname) || empty($lastname) || empty($cycle) || empty($filiere) || empty($niveau) || empty($date1) || empty($date2) || empty($image) || empty($cin) || empty($bac) || empty($reussite)) {
-            echo "<script type=\'text/javascript\'>".
-            "alert('Error : Empty Fields !');".
-            "</script>";
+        if (empty($matricule) || empty($Email) || empty($pwd) || empty($pwdR) || empty($firstname) || empty($lastname) || empty($cycle) || empty($filiere) || empty($niveau) || empty($date1) || empty($date2) || empty($image) || empty($cin) || empty($bac) || empty($reussite)) {
+            header("Location: ../signup.php?error=emtyfields&Matricule=".$matricule);
             exit();
-        }
-
-        else if (!filter_var($Email, FILTER_VALID_EMAIL)){
-            echo "<script type=\'text/javascript\'>".
-            "alert('Error : Invalid Email !');".
-            "</script>";
+        }else if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
+            header("Location: ../signup.php?error=invalidEmail&Matricule=".$matricule);
             exit();
-        }
-
-        else if (!preg_match("/^[a-zA-Z0-9]", $matricule){
-            echo "<script type=\'text/javascript\'>".
-            "alert('Error : Invalid matricule !');".
-            "</script>";
+        }else if (!preg_match("/^[a-zA-Z0-9]*$/",$matricule)){
+            header("Location: ../signup.php?error=invalidMatricule&Matricule=".$matricule);
             exit();
-        }
-
-        else if (!preg_match("/^[a-zA-Z]", $firstname){
-            echo "<script type=\'text/javascript\'>".
-            "alert('Error : Invalid firstname !');".
-            "</script>";
+        }else if (!preg_match("/^[a-zA-Z]*$/", $firstname)){
+            header("Location: ../signup.php?error=invalidFirstname&Matricule=".$matricule);
             exit();
-        }
-
-        else if (!preg_match("/^[a-zA-Z]", $lastname){
-            echo "<script type=\'text/javascript\'>".
-            "alert('Error : Invalid lastname !');".
-            "</script>";
+        }else if (!preg_match("/^[a-zA-Z]*$/", $lastname)){
+            header("Location: ../signup.php?error=invalidLastname&Matricule=".$matricule);
             exit();
-        }
-
-        else if ($Password !== $PasswordR) {
-            echo "<script type=\'text/javascript\'>".
-            "alert('Error : Use the same Password !');".
-            "</script>";
+        }else if ($pwd !== $pwdR) {
+            header("Location: ../signup.php?error=invalidPassword&Matricule=".$matricule);
             exit();
+        }else if ( is_image($image) ==0 && is_image($cin) ==0 && is_image($bac) ==0 && is_image($reussite) ==0 ){
+            header("Location: ../signup.php?error=ImageTypeNotRespected&Matricule= ".$matricule);
+
+        }else{// to check if the email is already used
+            $sql = "SELECT * FROM Patient WHERE Email=?;";// checking if the email exists in the databse 
+            $statment = mysqli_stmt_init($db);
+            if (!mysqli_stmt_prepare($statment, $sql)) { //cheking if our connection to the databse doesn't work
+                header("Location: ../signup.php?error=sqlerror1");
+                exit();
+            }else{
+                mysqli_stmt_bind_param($statment, "s", $email);
+                mysqli_stmt_execute($statment);
+                mysqli_store_result($statment);
+                $resultcheck = mysqli_stmt_num_rows($statment);//stores the number of the same emails in the database
+                if ($resultcheck > 0){
+                    header("Location: ../signup.php?error=emailused");
+                    exit();
+                }
+                else {
+                    $sql = " INSERT INTO users( matricule , Email , pwd , pwdR , firstname , lastname , cycle , filiere , niveau , date1 , date2 , img ,  cin , bac , reussite )    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+                    $statment = mysqli_stmt_init($db);//connect to the database 
+                    if (! mysqli_stmt_prepare( $statment, $sql)) { //cheking if our connection to the databse works
+                        header("Location: ../signup.php?error=sqlerror2");
+                        exit();
+                    }
+                    else{
+                        mysqli_stmt_bind_param($statment, "ssssssssssssssssss",$matricule,$Email,$pwd,$pwdR,$firstname,$lastname,$cycle,$filiere,$niveau,$date1,$date2,$image,$cin,$bac,$reussite);
+                        mysqli_stmt_execute($statment);
+                        header("Location: ../login.php?signup=success");
+                        exit();
+                    }
+            }
         }
-        
-        is_image($image);
-        is_image($cin);
-        is_image($bac);
-        si_image($reussite);
-
-
-        $sql = " INSERT INTO users ( matricule , Email , Password , PasswordR , firstname , lastname , cycle , filiere , niveau , date1 , date2 , image ,  cin , bac , reussite )    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
-        $stmtinsert = $db->prepare($sql);
-        $result = $stmtinsert->execute([$matricule,$Email,$Password,$PasswordR,$firstname,$lastname,$cycle,$filiere,$niveau,$date1,$date2,$image,$cin,$bac,$reussite]);
-        if($result){
-            echo "<script type=\'text/javascript\'>".
-                    "alert('success');".
-                    "</script>";
+        }
+        mysqli_stmt_close($statment);//closing the statment
+        mysqli_close($db);
         }else{
-            echo "Error!". mysql_error();
-        }
+        header("Location: ../signup.php");
+        exit();
     }
-
-
+    
     function is_image($path) {
         $a = getimagesize($path);
         $image_type = $a[2];
         
         if(in_array($image_type , array(IMAGETYPE_JPEG , IMAGETYPE_JPEG ,IMAGETYPE_PNG)))
         {
-            return true;
-        }
-        echo "<script type=\'text/javascript\'>".
-        "alert('Error : Image type must be JPG , JPEG , PNG !');".
-        "</script>";
-        exit();;
+            return 1;
+        }else{
+            return 0;
     }
+}
             
-	?>	
+	?>

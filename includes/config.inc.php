@@ -1,10 +1,12 @@
 <?php
 
-$db_user = "root";
-$db_pass = "";
-$db_name = "useraccounts";
-
-$db = new PDO('mysql:host=localhost;dbname=' . $db_name . ';charset=utf8' , $db_user, $db_pass);
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$dbhost = "localhost";
+$db = "users";
+$dbuser = "root";
+$dbpass = "";
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
+if (!$conn) {
+    die("Connection failed: ". mysqli_connect_error());
+}
 
 ?>
