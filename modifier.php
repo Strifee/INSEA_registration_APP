@@ -30,7 +30,9 @@ session_start();
                             <br>
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Email</strong></b></label>
-                                <input class="form-control" id="Email" type="Email" name="Email" style="text-align:center;" >
+                                <?php
+                                echo '<input class="form-control" id="Email" type="Email" name="Email" value ='. $_SESSION['unserEmail'] .'style="text-align:center;" >'
+                                ?>
                             </div>
 
                             <br>
