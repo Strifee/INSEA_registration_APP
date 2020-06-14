@@ -32,23 +32,18 @@
         }else if (!preg_match("/^[a-zA-Z]*$/", $firstname)){
             header("Location: ../signup.php?error=invalidFirstname&Matricule=".$matricule);
             exit();
-        }else if (!preg_match("/^[a-zA-Z]*$/", $lastname)){
-            header("Location: ../signup.php?error=invalidLastname&Matricule=".$matricule);
-            exit();
+
         }else if ($pwd !== $pwdR) {
             header("Location: ../signup.php?error=invalidPassword&Matricule=".$matricule);
             exit();
-        }else if ( is_image($image) ==0 && is_image($cin) ==0 && is_image($bac) ==0 && is_image($reussite) ==0 ){
-            header("Location: ../signup.php?error=ImageTypeNotRespected&Matricule= ".$matricule);
-
         }else{// to check if the email is already used
-            $sql = "SELECT * FROM Patient WHERE Email=?;";// checking if the email exists in the databse 
-            $statment = mysqli_stmt_init($db);
+            $sql = "SELECT * FROM users WHERE Email=?;";// checking if the email exists in the databse 
+            $statment = mysqli_stmt_init($conn);
             if (!mysqli_stmt_prepare($statment, $sql)) { //cheking if our connection to the databse doesn't work
                 header("Location: ../signup.php?error=sqlerror1");
                 exit();
             }else{
-                mysqli_stmt_bind_param($statment, "s", $email);
+                mysqli_stmt_bind_param($statment, "s", $Email);
                 mysqli_stmt_execute($statment);
                 mysqli_store_result($statment);
                 $resultcheck = mysqli_stmt_num_rows($statment);//stores the number of the same emails in the database
@@ -57,14 +52,14 @@
                     exit();
                 }
                 else {
-                    $sql = " INSERT INTO users( matricule , Email , pwd , pwdR , firstname , lastname , cycle , filiere , niveau , date1 , date2 , img ,  cin , bac , reussite )    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
-                    $statment = mysqli_stmt_init($db);//connect to the database 
+                    $sql = " INSERT INTO users( matricule , Email , pwd , firstname , lastname , cycle , filiere , niveau , date1 , date2 , img , cin , bac , reussite )    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    $statment = mysqli_stmt_init($conn);//connect to the database 
                     if (! mysqli_stmt_prepare( $statment, $sql)) { //cheking if our connection to the databse works
                         header("Location: ../signup.php?error=sqlerror2");
                         exit();
                     }
                     else{
-                        mysqli_stmt_bind_param($statment, "ssssssssssssssssss",$matricule,$Email,$pwd,$pwdR,$firstname,$lastname,$cycle,$filiere,$niveau,$date1,$date2,$image,$cin,$bac,$reussite);
+                        mysqli_stmt_bind_param($statment, "ssssssssssbbbb",$matricule,$Email,$pwd,$firstname,$lastname,$cycle,$filiere,$niveau,$date1,$date2,$image,$cin,$bac,$reussite);
                         mysqli_stmt_execute($statment);
                         header("Location: ../login.php?signup=success");
                         exit();
@@ -73,7 +68,7 @@
         }
         }
         mysqli_stmt_close($statment);//closing the statment
-        mysqli_close($db);
+        mysqli_close($conn);
         }else{
         header("Location: ../signup.php");
         exit();

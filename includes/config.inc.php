@@ -1,7 +1,7 @@
 <?php
 
 $dbhost = "localhost";
-$db = "useraccounts";
+$db = "mydatabse";
 $dbuser = "root";
 $dbpass = "";
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
