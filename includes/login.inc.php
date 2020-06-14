@@ -1,15 +1,17 @@
 <?php
     
-if (isset($_POST['login-submit'])) {
-    require 'dbh.inc.php';
+if (isset($_POST['login'])) {
+    require 'config.inc.php';
 
     $matricule = $_POST["matricule"];
     $pwd = $_POST["Password"];
 
-    if (empty($matricule) || empty($pwd) ){
+
+    if (empty($matricule) || empty($pwd)){
         header("Location: ../login.php?error=emtyfields&Matricule=".$matricule);
         exit();
     }else{
+        
         $sql = "SELECT * FROM users WHERE matricule=?;";
         $statment = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($statment, $sql)){//cheking if our connection to the databse doesn't work
@@ -51,3 +53,5 @@ if (isset($_POST['login-submit'])) {
     header("Location: ../login.php");
     exit();
 }
+
+?>

@@ -1,14 +1,17 @@
+<?php
+session_start();
+?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Inscription</title>
+    <title>Votre Profile</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>	
-    <link rel="stylesheet" type="text/css" href="css/regStyle.css">
+    <link rel="stylesheet" type="text/css" href="css/modifier.css">
 </head>
 <body>
     
@@ -20,32 +23,14 @@
             <form class="form-container text-center p-5" style="color: #fff;" action="includes/signup.inc.php" method="post">
                             <h5 class="card-header text-center py-4" >
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/INSEA_logo.png" style=" width:100px; height:100px;">
-                                <strong style="font-size:50px;">Inscription</strong>
+                                <strong style="font-size:50px;">Votre Profile</strong>
                                 <br>
-                            <p>Veuillez remplir toutes les informations.</p>
                             </h5>
-                            <div class="form-group">
-                                <label for="inputdefault"><b><strong style="font-size:20px;">Matricule</strong></b>
-                                </label>
-                                <input class="form-control" id="matricule"  type="text" name="matricule" style="text-align:center;" >
-                            </div>
-
+                       
                             <br>
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Email</strong></b></label>
                                 <input class="form-control" id="Email" type="Email" name="Email" style="text-align:center;" >
-                            </div>
-
-                            <br>
-                            <div class="form-group">
-                                <label for="inputdefault"><b><strong style="font-size:20px;">Mot de passe</strong></b></label>
-                                <input class="form-control" id="Password" type="Password" name="Password" style="text-align:center;" >
-                            </div>
-
-                            <br>
-                            <div class="form-group">
-                                <label for="inputdefault"><b><strong style="font-size:20px;">Confirmez votre mot de passe</strong></b></label>
-                                <input class="form-control" id="PasswordR" type="Password" name="PasswordR" style="text-align:center;" >
                             </div>
 
                             <br>
@@ -142,7 +127,7 @@
 
                             <div class="form-group">
                                 <hr class="mb-3">
-                                <input class="btn btn-success " type="submit" id="register" name="create" value="Sign Up">
+                                <input class="btn btn-success " type="modifier" id="modifier" name="create" value="Sign out">
                             </div>
             </form>
         </div>

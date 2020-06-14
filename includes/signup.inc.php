@@ -83,12 +83,12 @@
         $a = getimagesize($path);
         $image_type = $a[2];
         
-        if(in_array($image_type , array(IMAGETYPE_JPEG , IMAGETYPE_JPEG ,IMAGETYPE_PNG)))
+        if(in_array($image_type , array("jpg","jpeg","png")))
         {
             return 1;
         }else{
             return 0;
     }
 }
-            
-	?>
+     
+    ?>

@@ -12,9 +12,10 @@
 				<input type="text" name="matricule" placeholder="Entrer votre matricule"/>	
 			</div>
 			<div class="form-input">
-				<input type="password" name="Password" placeholder="password"/>
+				<input type="Password" name="Password" placeholder="Password"/>
 			</div>
-			<button type="submit" value="LOGIN" class="btn-login">LOGIN</button>
+			<
+				<button type="submit" name="login" class="btn-login">LOGIN</button>
 		</form>
 	</div>
 </body>
