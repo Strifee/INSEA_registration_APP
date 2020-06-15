@@ -14,7 +14,6 @@
 			<div class="form-input">
 				<input type="Password" name="Password" placeholder="Password"/>
 			</div>
-			<
 				<button type="submit" name="login" class="btn-login">LOGIN</button>
 		</form>
 	</div>

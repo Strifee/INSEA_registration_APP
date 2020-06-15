@@ -20,7 +20,7 @@ session_start();
 <section class="container-fluid">
     <div class="form-groupe" >
         <div class="card-body col-lg-6" style="margin: auto;" >
-            <form class="form-container text-center p-5" style="color: #fff;" action="includes/signup.inc.php" method="post">
+            <form class="form-container text-center p-5" style="color: #fff;" action="includes/modifier.inc.php" method="post">
                             <h5 class="card-header text-center py-4" >
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/INSEA_logo.png" style=" width:100px; height:100px;">
                                 <strong style="font-size:50px;">Votre Profile</strong>
@@ -31,27 +31,31 @@ session_start();
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Email</strong></b></label>
                                 <?php
-                                echo '<input class="form-control" id="Email" type="Email" name="Email" value ='. $_SESSION['unserEmail'] .'style="text-align:center;" >'
+                                echo '<input class="form-control" id="Email" type="Email" name="Email" value ="'. $_SESSION['unserEmail'] .'" style="text-align:center;" >'
                                 ?>
                             </div>
 
                             <br>
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Nom</strong></b></label>
-                                <input class="form-control" id="firstname" type="text" name="firstname" style="text-align:center;" >
+                                <?php
+                                    echo '<input class="form-control" id="firstname" type="text" value ="'. $_SESSION['unserLastname'] .'" name="firstname" style="text-align:center;" >';
+                                ?>
                             </div>
 
                             <br>
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Prenom</strong></b></label>
-                                <input class="form-control" id="lastname"  type="text" name="lastname" style="text-align:center;" >
+                                <?php
+                                echo '<input class="form-control" id="lastname"  type="text" name="lastname" value ="'. $_SESSION['unserFirstname'] .'" style="text-align:center;" >';
+                                ?>
                             </div>
 
                             <br>
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Cycle</strong></b></label>
-                                <select  class="form-control" id="cycle" name="cycle" >
+                                <select class="form-control" id="cycle" name="cycle" >
                                     <option value="ingenieur">ingénieurs-d’Etat</option>
                                     <option value="Master">Master</option>
                                     <option value="Doctorat">Doctorat</option>
@@ -89,14 +93,18 @@ session_start();
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Date De Naissance</strong></b></label>
-                                <input class="form-control" id="date1"  type="date" name="date1" >
+                                <?php
+                                echo '<input class="form-control" id="date1" value ="'. $_SESSION['userDateNaissance'] .'"  type="date" name="date1" >';
+                                ?>
                             </div>
 
                             <br>
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Date D'inscription</strong></b></label>
-                                <input class="form-control" id="date2"  type="date" name="date2" >
+                                <?php
+                                echo '<input class="form-control" id="date2" value ="'. $_SESSION['userDateinscr'] .'"   type="date" name="date2" >';
+                                ?>
                             </div>
                             
                             <br>
@@ -129,7 +137,7 @@ session_start();
 
                             <div class="form-group">
                                 <hr class="mb-3">
-                                <input class="btn btn-success " type="modifier" id="modifier" name="create" value="Sign out">
+                                <input class="btn btn-success " type="submit" id="modifier" name="submit-mod" value="Modifier">
                             </div>
             </form>
         </div>
