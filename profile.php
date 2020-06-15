@@ -20,6 +20,7 @@ session_start();
 <section class="container-fluid">
     <div class="form-groupe" >
         <div class="card-body col-lg-6" style="margin: auto;" >
+        
             <form class="form-container text-center p-5" style="color: #fff;" action="includes/modifier.inc.php" method="post">
                             <h5 class="card-header text-center py-4" >
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/INSEA_logo.png" style=" width:100px; height:100px;">
@@ -140,6 +141,13 @@ session_start();
                                 <input class="btn btn-success " type="submit" id="modifier" name="submit-mod" value="Modifier">
                             </div>
             </form>
+            <form action="includes/logout.inc.php" method="post" style="text-align: center;">
+            <div class="form-group">
+                <hr class="mb-6">
+                <button class="btn btn-primary"> Déconnexion</button>
+            </div>
+        </form>
+            
         </div>
     </div>
 </section>
