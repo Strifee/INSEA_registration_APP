@@ -14,11 +14,43 @@
         $niveau = $_POST['niveau'];
         $date1 = $_POST['date1'];
         $date2 = $_POST['date2'];
-        $image = $_POST['image'];
-        $cin = $_POST['cin'];
-        $bac = $_POST['bac'];
-        $reussite = $_POST['reussite'];
+    
+        $image = $_FILES['image'];
+        $cin = $_FILES['cin'];
+        $bac = $_FILES['bac'];
+        $reussite = $_FILES['reussite'];
         
+        #image
+        
+        $imageName = $_FILES['image']['name'];
+        $imageTmpName = $_FILES['image']['tmp_name'];
+        $imageSize = $_FILES['image']['size'];
+        $imageError = $_FILES['image']['error'];
+        $imageType = $_FILES['image']['type'];
+
+        $imageExt  = explode('.', $imageName);
+        $imageActualExt = strtolower((end($imageExt)));
+
+        $allowed = array('jpg', 'jpeg', 'png');
+
+        if (is_array($imageActualExt, $allowed)){
+           if($imageError === 0){
+               if($imageSize < 10000){
+                   # less than 10mb
+                    $imageNameNew = uniqid('',true).".".$imageActualExt;
+                    $imageDestination ='image/Photo/'.$imageNameNew;
+                    move_uploaded_file($imageTmpName, $imageDestination);
+                }else{
+                    header("Location: ../signup.php?error=ImagesSizeTooBig");
+                }
+           }else{
+               header("Location: ../signup.php?error=ImagesUploadError");
+            }
+        }else{
+            header("Location: ../signup.php?error=ImagesTypesNotRespected");
+        }
+
+        #fin image
 
         if (empty($matricule) || empty($Email) || empty($pwd) || empty($pwdR) || empty($firstname) || empty($lastname) || empty($cycle) || empty($filiere) || empty($niveau) || empty($date1) || empty($date2) || empty($image) || empty($cin) || empty($bac) || empty($reussite)) {
             header("Location: ../signup.php?error=emtyfields&Matricule=".$matricule);
@@ -31,8 +63,13 @@
             exit();
         }else if (!preg_match("/^[a-zA-Z]*$/", $firstname)){
             header("Location: ../signup.php?error=invalidFirstname&Matricule=".$matricule);
+            exit(); 
+        }else if (!preg_match("/^[a-zA-Z]*$/", $lastname)){
+                header("Location: ../signup.php?error=invalidLastname&Matricule=".$matricule);
+                exit();
+        }else if ($pwd !== $pwdR) {
+            header("Location: ../signup.php?error=invalidPassword&Matricule=".$matricule);
             exit();
-
         }else if ($pwd !== $pwdR) {
             header("Location: ../signup.php?error=invalidPassword&Matricule=".$matricule);
             exit();
@@ -74,16 +111,4 @@
         exit();
     }
     
-    function is_image($path) {
-        $a = getimagesize($path);
-        $image_type = $a[2];
-        
-        if(in_array($image_type , array("jpg","jpeg","png")))
-        {
-            return 1;
-        }else{
-            return 0;
-    }
-}
-     
     ?>
