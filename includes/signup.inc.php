@@ -14,13 +14,12 @@
         $niveau = $_POST['niveau'];
         $date1 = $_POST['date1'];
         $date2 = $_POST['date2'];
-    
+        
+
         $image = $_FILES['image'];
         $cin = $_FILES['cin'];
         $bac = $_FILES['bac'];
         $reussite = $_FILES['reussite'];
-        
-        #image
         
         $imageName = $_FILES['image']['name'];
         $imageTmpName = $_FILES['image']['tmp_name'];
@@ -31,6 +30,38 @@
         $imageExt  = explode('.', $imageName);
         $imageActualExt = strtolower((end($imageExt)));
 
+
+        $cinName = $_FILES['cin']['name'];
+        $cinTmpName = $_FILES['cin']['tmp_name'];
+        $cinSize = $_FILES['cin']['size'];
+        $cinError = $_FILES['cin']['error'];
+        $cinType = $_FILES['cin']['type'];
+
+        $cinExt  = explode('.', $cinName);
+        $cinActualExt = strtolower((end($cinExt)));
+
+
+        $bacName = $_FILES['bac']['name'];
+        $bacTmpName = $_FILES['bac']['tmp_name'];
+        $bacSize = $_FILES['bac']['size'];
+        $bacError = $_FILES['bac']['error'];
+        $bacType = $_FILES['bac']['type'];
+
+        $bacExt  = explode('.', $bacName);
+        $bacActualExt = strtolower((end($bacExt)));
+
+
+        $reussiteName = $_FILES['reussite']['name'];
+        $reussiteTmpName = $_FILES['reussite']['tmp_name'];
+        $reussiteSize = $_FILES['reussite']['size'];
+        $reussiteError = $_FILES['reussite']['error'];
+        $reussiteType = $_FILES['reussite']['type'];
+
+        $reussiteExt  = explode('.', $reussiteName);
+        $reussiteActualExt = strtolower((end($reussiteExt)));
+
+
+
         $allowed = array('jpg', 'jpeg', 'png');
 
 
@@ -40,26 +71,15 @@
         if (empty($matricule) || empty($Email) || empty($pwd) || empty($pwdR) || empty($firstname) || empty($lastname) || empty($cycle) || empty($filiere) || empty($niveau) || empty($date1) || empty($date2) || empty($image) || empty($cin) || empty($bac) || empty($reussite)) {
             header("Location: ../signup.php?error=emtyfields&Matricule=".$matricule);
             exit();
-        }
-        #image
-        elseif (is_array($imageActualExt, $allowed)){
-            if($imageError === 1){
+        }else if (!is_array($imageActualExt, $allowed) || !is_array($cinActualExt, $allowed) || !is_array($bacActualExt, $allowed) || !is_array($reussiteActualExt, $allowed) ){
+            if(($imageError !==  0) || ($cinError !==  0) || ($bacError !==  0) || ($reussiteError !==  0)){
                     header("Location: ../signup.php?error=ImagesUploadError");
-                 }
-                
-            }elseif($imageSize > 10000){
+            }else if(($imageSize > 10000) || ($imageSize > 10000) || ($imageSize > 10000) || ($imageSize > 10000)){
                 header("Location: ../signup.php?error=ImagesSizeTooBig");
-                 
             }else{
-                $imageNameNew = uniqid('',true).".".$imageActualExt;
-                $imageDestination ='image/Photo/'.$imageNameNew;
-                move_uploaded_file($imageTmpName, $imageDestination);
-                header("Location: ../signup.php?success=imageloaded");
-                exit();
+                header("Location: ../signup.php?error=ImagesTypesNotRespected");
             }
-         }
-         #fin image
-        else if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
+        }else if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
             header("Location: ../signup.php?error=invalidEmail&Matricule=".$matricule);
             exit();
         }else if (!preg_match("/^[a-zA-Z0-9]*$/",$matricule)){
@@ -71,7 +91,7 @@
         }else if (!preg_match("/^[a-zA-Z]*$/", $lastname)){
                 header("Location: ../signup.php?error=invalidLastname&Matricule=".$matricule);
                 exit();
-        }else if ($pwd !== $pwdR) {
+        }else if ( $pwd !== $pwdR) {
             header("Location: ../signup.php?error=invalidPassword&Matricule=".$matricule);
             exit();
         }else if ($pwd !== $pwdR) {
@@ -93,13 +113,16 @@
                     exit();
                 }
                 else {
+                    $imageNameNew = uniqid('',true).".".$imageActualExt;
+                    $imageDestination ='image/Photo/'.$imageNameNew;
+                    move_uploaded_file($imageTmpName, $imageDestination);
+
                     $sql = " INSERT INTO users( matricule , Email , pwd , firstname , lastname , cycle , filiere , niveau , date1 , date2 , img , cin , bac , reussite )    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                     $statment = mysqli_stmt_init($conn);//connect to the database 
                     if (! mysqli_stmt_prepare( $statment, $sql)) { //cheking if our connection to the databse works
                         header("Location: ../signup.php?error=sqlerror2");
                         exit();
-                    }
-                    else{
+                    }else{
                         mysqli_stmt_bind_param($statment, "ssssssssssbbbb",$matricule,$Email,$pwd,$firstname,$lastname,$cycle,$filiere,$niveau,$date1,$date2,$image,$cin,$bac,$reussite);
                         mysqli_stmt_execute($statment);
                         header("Location: ../login.php?signup=success");
