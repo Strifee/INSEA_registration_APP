@@ -33,29 +33,33 @@
 
         $allowed = array('jpg', 'jpeg', 'png');
 
-        if (is_array($imageActualExt, $allowed)){
-           if($imageError === 0){
-               if($imageSize < 10000){
-                   # less than 10mb
-                    $imageNameNew = uniqid('',true).".".$imageActualExt;
-                    $imageDestination ='image/Photo/'.$imageNameNew;
-                    move_uploaded_file($imageTmpName, $imageDestination);
-                }else{
-                    header("Location: ../signup.php?error=ImagesSizeTooBig");
-                }
-           }else{
-               header("Location: ../signup.php?error=ImagesUploadError");
-            }
-        }else{
-            header("Location: ../signup.php?error=ImagesTypesNotRespected");
-        }
+
 
         #fin image
 
         if (empty($matricule) || empty($Email) || empty($pwd) || empty($pwdR) || empty($firstname) || empty($lastname) || empty($cycle) || empty($filiere) || empty($niveau) || empty($date1) || empty($date2) || empty($image) || empty($cin) || empty($bac) || empty($reussite)) {
             header("Location: ../signup.php?error=emtyfields&Matricule=".$matricule);
             exit();
-        }else if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
+        }
+        #image
+        elseif (is_array($imageActualExt, $allowed)){
+            if($imageError === 1){
+                    header("Location: ../signup.php?error=ImagesUploadError");
+                 }
+                
+            }elseif($imageSize > 10000){
+                header("Location: ../signup.php?error=ImagesSizeTooBig");
+                 
+            }else{
+                $imageNameNew = uniqid('',true).".".$imageActualExt;
+                $imageDestination ='image/Photo/'.$imageNameNew;
+                move_uploaded_file($imageTmpName, $imageDestination);
+                header("Location: ../signup.php?success=imageloaded");
+                exit();
+            }
+         }
+         #fin image
+        else if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
             header("Location: ../signup.php?error=invalidEmail&Matricule=".$matricule);
             exit();
         }else if (!preg_match("/^[a-zA-Z0-9]*$/",$matricule)){
