@@ -1,5 +1,5 @@
 <?php
-	if(isset($_POST['create'])){
+	if(isset($_POST['submit'])){
 
         require 'config.inc.php';
 
@@ -15,47 +15,46 @@
         $date1 = $_POST['date1'];
         $date2 = $_POST['date2'];
         
-
-        $image = $_FILES['image'];
-        $cin = $_FILES['cin'];
-        $bac = $_FILES['bac'];
-        $reussite = $_FILES['reussite'];
+        $image = $_POST['image'];
+        $cin = $_POST['cin'];
+        $bac = $_POST['bac'];
+        $reussite = $_POST['reussite'];
         
-        $imageName = $_FILES['image']['name'];
-        $imageTmpName = $_FILES['image']['tmp_name'];
-        $imageSize = $_FILES['image']['size'];
-        $imageError = $_FILES['image']['error'];
-        $imageType = $_FILES['image']['type'];
+        $imageName = $image['name'];
+        $imageTmpName = $image['tmp_name'];
+        $imageSize = $image['size'];
+        $imageError = $image['error'];
+        $imageType = $image['type'];
 
         $imageExt  = explode('.', $imageName);
         $imageActualExt = strtolower((end($imageExt)));
 
 
-        $cinName = $_FILES['cin']['name'];
-        $cinTmpName = $_FILES['cin']['tmp_name'];
-        $cinSize = $_FILES['cin']['size'];
-        $cinError = $_FILES['cin']['error'];
-        $cinType = $_FILES['cin']['type'];
+        $cinName = $cin['name'];
+        $cinTmpName = $cin['tmp_name'];
+        $cinSize = $cin['size'];
+        $cinError = $cin['error'];
+        $cinType = $cin['type'];
 
         $cinExt  = explode('.', $cinName);
         $cinActualExt = strtolower((end($cinExt)));
 
 
-        $bacName = $_FILES['bac']['name'];
-        $bacTmpName = $_FILES['bac']['tmp_name'];
-        $bacSize = $_FILES['bac']['size'];
-        $bacError = $_FILES['bac']['error'];
-        $bacType = $_FILES['bac']['type'];
+        $bacName = $bac['name'];
+        $bacTmpName = $bac['tmp_name'];
+        $bacSize = $bac['size'];
+        $bacError = $bac['error'];
+        $bacType = $bac['type'];
 
         $bacExt  = explode('.', $bacName);
         $bacActualExt = strtolower((end($bacExt)));
 
 
-        $reussiteName = $_FILES['reussite']['name'];
-        $reussiteTmpName = $_FILES['reussite']['tmp_name'];
-        $reussiteSize = $_FILES['reussite']['size'];
-        $reussiteError = $_FILES['reussite']['error'];
-        $reussiteType = $_FILES['reussite']['type'];
+        $reussiteName = $reussite['name'];
+        $reussiteTmpName = $reussite['tmp_name'];
+        $reussiteSize = $reussite['size'];
+        $reussiteError = $reussite['error'];
+        $reussiteType = $reussite['type'];
 
         $reussiteExt  = explode('.', $reussiteName);
         $reussiteActualExt = strtolower((end($reussiteExt)));
@@ -65,13 +64,12 @@
         $allowed = array('jpg', 'jpeg', 'png');
 
 
-
         #fin image
 
         if (empty($matricule) || empty($Email) || empty($pwd) || empty($pwdR) || empty($firstname) || empty($lastname) || empty($cycle) || empty($filiere) || empty($niveau) || empty($date1) || empty($date2) || empty($image) || empty($cin) || empty($bac) || empty($reussite)) {
             header("Location: ../signup.php?error=emtyfields&Matricule=".$matricule);
             exit();
-        }else if (!is_array($imageActualExt, $allowed) || !is_array($cinActualExt, $allowed) || !is_array($bacActualExt, $allowed) || !is_array($reussiteActualExt, $allowed) ){
+        }else if (is_array($imageActualExt, $allowed) || is_array($cinActualExt, $allowed) || is_array($bacActualExt, $allowed) || is_array($reussiteActualExt, $allowed) ){
             if(($imageError !==  0) || ($cinError !==  0) || ($bacError !==  0) || ($reussiteError !==  0)){
                     header("Location: ../signup.php?error=ImagesUploadError");
             }else if(($imageSize > 10000) || ($imageSize > 10000) || ($imageSize > 10000) || ($imageSize > 10000)){
@@ -97,7 +95,8 @@
         }else if ($pwd !== $pwdR) {
             header("Location: ../signup.php?error=invalidPassword&Matricule=".$matricule);
             exit();
-        }else{// to check if the email is already used
+        }else{
+            // to check if the email is already used
             $sql = "SELECT * FROM users WHERE Email=?;";// checking if the email exists in the databse 
             $statment = mysqli_stmt_init($conn);
             if (!mysqli_stmt_prepare($statment, $sql)) { //cheking if our connection to the databse doesn't work
@@ -113,9 +112,7 @@
                     exit();
                 }
                 else {
-                    $imageNameNew = uniqid('',true).".".$imageActualExt;
-                    $imageDestination ='image/Photo/'.$imageNameNew;
-                    move_uploaded_file($imageTmpName, $imageDestination);
+                   
 
                     $sql = " INSERT INTO users( matricule , Email , pwd , firstname , lastname , cycle , filiere , niveau , date1 , date2 , img , cin , bac , reussite )    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                     $statment = mysqli_stmt_init($conn);//connect to the database 
@@ -123,7 +120,26 @@
                         header("Location: ../signup.php?error=sqlerror2");
                         exit();
                     }else{
-                        mysqli_stmt_bind_param($statment, "ssssssssssbbbb",$matricule,$Email,$pwd,$firstname,$lastname,$cycle,$filiere,$niveau,$date1,$date2,$image,$cin,$bac,$reussite);
+
+                        $imageNameNew = uniqid('',true).".".$imageActualExt;
+                        $imageDestination ='image/photo/'.$imageNameNew;
+                        move_uploaded_file($imageTmpName, $imageDestination);
+
+                        $cinNameNew = uniqid('',true).".".$cinActualExt;
+                        $cinDestination ='image/BAC'.$imageNameNew;
+                        move_uploaded_file($cinTmpName, $cinDestination);
+                
+                        $bacNameNew = uniqid('',true).".".$bacActualExt;
+                        $bacDestination ='image/CIN'.$imageNameNew;
+                        move_uploaded_file($bacTmpName, $bacDestination);
+                        
+                        $reussiteNameNew = uniqid('',true).".".$reussiteActualExt;
+                        $reussiteDestination ='image/attestation'.$reussiteNameNew;
+                        move_uploaded_file($reussiteTmpName, $reussiteDestination);
+                    
+                        $hpwd = password_hash($pwd, PASSWORD_DEFAULT);
+                        
+                        mysqli_stmt_bind_param($statment, "ssssssssssssss",$matricule,$Email,$hpwd,$firstname,$lastname,$cycle,$filiere,$niveau,$date1,$date2,$image,$cin,$bac,$reussite);
                         mysqli_stmt_execute($statment);
                         header("Location: ../login.php?signup=success");
                         exit();

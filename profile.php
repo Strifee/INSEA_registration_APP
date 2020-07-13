@@ -32,7 +32,7 @@ session_start();
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Email</strong></b></label>
                                 <?php
-                                echo '<input class="form-control" id="Email" type="Email" name="Email" value ="'. $_SESSION['unserEmail'] .'" style="text-align:center;" >'
+                                echo '<input class="form-control" id="Email" type="Email" name="Email" value ="'. $_SESSION['userEmail'] .'" style="text-align:center;" >'
                                 ?>
                             </div>
 
@@ -40,7 +40,7 @@ session_start();
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Nom</strong></b></label>
                                 <?php
-                                    echo '<input class="form-control" id="firstname" type="text" value ="'. $_SESSION['unserLastname'] .'" name="firstname" style="text-align:center;" >';
+                                    echo '<input class="form-control" id="firstname" type="text" value ="'. $_SESSION['userLastname'] .'" name="firstname" style="text-align:center;" >';
                                 ?>
                             </div>
 
@@ -48,7 +48,7 @@ session_start();
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Prenom</strong></b></label>
                                 <?php
-                                echo '<input class="form-control" id="lastname"  type="text" name="lastname" value ="'. $_SESSION['unserFirstname'] .'" style="text-align:center;" >';
+                                echo '<input class="form-control" id="lastname"  type="text" name="lastname" value ="'. $_SESSION['userFirstname'] .'" style="text-align:center;" >';
                                 ?>
                             </div>
 
@@ -67,8 +67,8 @@ session_start();
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Filière</strong></b></label>
-                                
-                                <select  class="form-control" id="filiere" name="filiere">
+                                <?php
+                                echo'<select  class="form-control" id="filiere" value ="'. $_SESSION['userFiliere'] .'"  name="filiere">
                                     <option value="AF">Actuariat-Finance</option>
                                     <option value="DSE">Ingénierie des Données et des Logiciels</option>
                                     <option value="ROAD">Recherche Opérationnelle et Aide à la Décision</option>
@@ -76,18 +76,24 @@ session_start();
                                     <option value="Stat-Demo">Statistique-Démographie</option>
                                     <option value="Stat-Eco">Statistique-Economie Appliquée</option>
                                     <option value="LSI2M">SI2M</option>
-                                </select>
+                                </select>';
+                                ?>
                             </div>
                             
                             <br>
 
                             <div class="form-group">
-                            <label for="inputdefault"><b><strong style="font-size:20px;">Niveau</strong></b></label>
-                                <select  class="form-control" id="niveau" name="niveau">
+                            
+                                
+                                
+                                    <label for="inputdefault"><b><strong style="font-size:20px;">Niveau</strong></b></label>  </h5><div class='form-group'>
+                                    <?php
+                                    echo '<select  class="form-control" id="niveau" name="niveau" value ="'. $_SESSION['userNiveau'] .'" >
                                     <option value="1ere">1ere année</option>
                                     <option value="2eme">2eme année</option>
                                     <option value="3eme">3eme année</option>
-                                </select>
+                                    </select>';
+                                ?>
                             </div>
 
                             <br>
@@ -112,28 +118,36 @@ session_start();
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Photo ( Type : JPG , JPEG , PNG )</strong></b></label>
-                                <input class="form-control" id="image"  type="file" name="image" >
+                                <?php
+                                echo '<input class="form-control" value ="'. $_SESSION['userImage'] .'" id="image"  type="file" name="image" >';
+                                ?>
                             </div>
 
                             <br>
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Copie de la CIN ( Type : JPG , JPEG , PNG )</strong></b></label>
-                                <input class="form-control" id="cin"  type="file" name="cin" >
+                                <?php
+                                echo '<input class="form-control" value ="'. $_SESSION['userCIN'] .'" id="cin"  type="file" name="cin" >';
+                                ?>
                             </div>
 
                             <br>
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Copie du Baccalauréat ( Type : JPG , JPEG , PNG )</strong></b></label>
-                                <input class="form-control" id="bac"  type="file" name="bac" >
+                                <?php
+                                echo '<input class="form-control" id="bac" value ="'. $_SESSION['userBAC'] .'"  type="file" name="bac" >';
+                                ?>
                             </div>
 
                             <br>
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Attestation de réussite (CNC,DEUGS ou Licence) ( Type : JPG , JPEG , PNG )</strong></b></label>
-                                <input class="form-control" id="reussite"  type="file" name="reussite" >
+                                <?php
+                                echo '<input class="form-control" id="reussite" value ="'. $_SESSION['userReussite'] .'"  type="file" name="reussite" >';
+                                ?>
                             </div>
 
                             <div class="form-group">

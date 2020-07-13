@@ -29,11 +29,18 @@ if (isset($_POST['login'])) {
                 }elseif ($pwd == $row['pwd']){
                     session_start();
                     $_SESSION['userMatricule'] = $row['matricule'];
-                    $_SESSION['unserFirstname'] = $row['firstname'];
-                    $_SESSION['unserLastname'] = $row['lastname'];
-                    $_SESSION['unserEmail'] = $row['Email'];
+                    $_SESSION['userFirstname'] = $row['firstname'];
+                    $_SESSION['userLastname'] = $row['lastname'];
+                    $_SESSION['userEmail'] = $row['Email'];
+                    $_SESSION['userNiveau'] = $row['niveau'];
+                    $_SESSION['userFiliere'] = $row['filiere'];
                     $_SESSION['userDateNaissance'] = $row['date1'];
                     $_SESSION['userDateinscr'] = $row['date2'];
+                    $_SESSION['userImage'] = $row['img'];
+                    $_SESSION['userCIN'] = $row['cin'];
+                    $_SESSION['userBAC'] = $row['bac'];
+                    $_SESSION['userReussite'] = $row['reussite'];
+
 
 
                     header("Location: ../profile.php?login=".$matricule);

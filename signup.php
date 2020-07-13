@@ -102,14 +102,14 @@
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Date De Naissance</strong></b></label>
-                                <input class="form-control" id="date1"  type="date" name="date1" >
+                                <input class="form-control" id="date1"  type="date" min="1970-01-01" max="2010-12-31" name="date1" >
                             </div>
 
                             <br>
 
                             <div class="form-group">
                                 <label for="inputdefault"><b><strong style="font-size:20px;">Date D'inscription</strong></b></label>
-                                <input class="form-control" id="date2"  type="date" name="date2" >
+                                <input class="form-control" id="date2"  type="date" min="2020-01-01" max="2020-12-31"name="date2" >
                             </div>
                             
                             <br>
@@ -142,7 +142,7 @@
 
                             <div class="form-group">
                                 <hr class="mb-3">
-                                <input class="btn btn-success " type="submit" id="register" name="create" value="Sign Up">
+                                <input class="btn btn-success " type="submit" name="submit" value="Sign Up">
                             </div>
             </form>
         </div>
