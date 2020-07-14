@@ -118,7 +118,7 @@
                     $statment = mysqli_stmt_init($conn);//connect to the database 
                     if (! mysqli_stmt_prepare( $statment, $sql)) { //cheking if our connection to the databse works
                         header("Location: ../signup.php?error=sqlerror2");
-                        exit();
+                        exit();  
                     }else{
 
                         $imageNameNew = uniqid('',true).".".$imageActualExt;

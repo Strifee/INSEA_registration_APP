@@ -23,10 +23,11 @@ if (isset($_POST['login'])) {
             $result = mysqli_stmt_get_result($statment);
             if ($row = mysqli_fetch_assoc($result)) {
                 //fetching the result in an associative array, so we can use it after
-                if ($pwd !== $row['pwd']) {//if the password is wrong
+                    $pwdCheck = password_verify($pwd, $row['pwd']);
+                if ($pwdCheck == FALSE) {//if the password is wrong
                     header("Location: ../login.php?error=wrongpassword");
                     exit();
-                }elseif ($pwd == $row['pwd']){
+                }else if ($pwdCheck == TRUE){
                     session_start();
                     $_SESSION['userMatricule'] = $row['matricule'];
                     $_SESSION['userFirstname'] = $row['firstname'];
